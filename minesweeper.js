@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', startGame)
+document.addEventListener('click', checkForWin)
+document.addEventListener('contextmenu', checkForWin)
+
 
 
 // Define your `board` object here!
@@ -56,7 +59,7 @@ function startGame () {
 // 1. Are all of the cells that are NOT mines visible?
 // 2. Are all of the mines marked?
 function checkForWin () {
-  console.log("I was called");
+  // console.log("I was called");
   for (var i=0; i<board.cells.length; i++){
     // if not a mine but hidden - no win
     if(!board.cells[i].isMine && board.cells[i].hidden){

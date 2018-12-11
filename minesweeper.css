@@ -20,6 +20,11 @@ body {
   font-size: 1.5rem;
 }
 
+#restartButton{
+  padding: 10px;
+  margin: 30px;
+}
+
 .board {
   display: flex;
   flex-wrap: wrap;

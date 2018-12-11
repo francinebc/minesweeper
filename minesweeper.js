@@ -1,15 +1,11 @@
 document.addEventListener('DOMContentLoaded', startGame)
-document.addEventListener('click', checkForWin)
-document.addEventListener('contextmenu', checkForWin)
 
 
 
 // Define your `board` object here!
-var board = {
+var board = {};
 
-};
-
-
+// default values
 var rows = 5;
 var mineNo = 9;
 
@@ -23,7 +19,7 @@ function populateCells(){
   }
   // assign mines
   var isAMine = randomRowCols();
-  for(var i=0; i<isAMine.length && i<rows*rows; i++){
+  for(var i=0; i<isAMine.length; i++){
     board.cells[isAMine[i][0]*rows+isAMine[i][1]].isMine = true;
   }
   // count surrounding mines
@@ -53,13 +49,24 @@ function randomRowCols(){
 function startGame () {
   displayMessage('Let\'s play!');
   setInitParams();
-
 }
 
 function gameInit(){
+  // set rows and mines
+  rows = document.getElementById("rowNum").value;
+  mineNo = document.getElementById("mineNum").value;
+  if(mineNo == "" || rows == "") return; // do nothing if no input
+  if(mineNo>=rows*rows) mineNo=rows*rows-1;
+  
   populateCells();
+
   // remove restart button and input fields
   document.getElementsByTagName('button')[0].remove();
+  document.getElementsByTagName('form')[0].remove();
+
+  //set event listeners
+  document.addEventListener('click', checkForWin)
+  document.addEventListener('contextmenu', checkForWin)
 
   
   // Don't remove this function call: it makes the game work!
@@ -84,7 +91,6 @@ function checkForWin () {
     }
   }
   displayMessage('You win!');
-  // play applause here
   playSound("audio/applause.mp3");
   restartButton();
   return true;

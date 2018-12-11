@@ -10,6 +10,16 @@ body {
   flex-direction: column;
 }
 
+button {
+  padding: 10px;
+  margin: 30px;
+}
+
+input {
+  padding: 10px;
+  margin: 30px;
+}
+
 #message, #notes {
   display: flex;
   flex-direction: column;
@@ -18,11 +28,6 @@ body {
 
 #message {
   font-size: 1.5rem;
-}
-
-button {
-  padding: 10px;
-  margin: 30px;
 }
 
 .board {

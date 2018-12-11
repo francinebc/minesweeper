@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', startGame)
 // Define your `board` object here!
 var board = {};
 
+
+var minRows = 2;
+var maxRows = 6;
+var minMines = 1;
+var maxMines = 10;
 // default values
 var rows = 5;
 var mineNo = 9;
@@ -56,6 +61,7 @@ function gameInit(){
   rows = document.getElementById("rowNum").value;
   mineNo = document.getElementById("mineNum").value;
   if(mineNo == "" || rows == "") return; // do nothing if no input
+  if(rows>maxRows) rows = maxRows;
   if(mineNo>=rows*rows) mineNo=rows*rows-1;
   
   populateCells();
@@ -103,17 +109,6 @@ function countSurroundingMines (cell) {
     if (surroundingCells[i].isMine) mines++;
   }
   return mines;
-}
-
-function restartButton(){
-  var body = document.getElementsByTagName('body')[0];
-  var button = document.createElement("button");
-  var buttonText = document.createTextNode("Restart");
-  button.appendChild(buttonText);
-  body.appendChild(button);
-
-  // add listener for button
-  button.addEventListener('click', restartGame);
 }
 
 function restartGame(){  

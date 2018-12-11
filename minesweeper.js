@@ -76,7 +76,9 @@ function checkForWin () {
       }
     }
   }
-  displayMessage('You win!')
+  displayMessage('You win!');
+  // play applause here
+  playSound("audio/applause.mp3");
   restartButton();
   return true;
 }
@@ -88,18 +90,6 @@ function countSurroundingMines (cell) {
     if (surroundingCells[i].isMine) mines++;
   }
   return mines;
-}
-
-function restartButton(){
-  var ele = document.getElementsByTagName('body')[0];
-  var button = document.createElement("button");
-  button.setAttribute("id", "restartButton");
-  var buttonText = document.createTextNode("Restart");
-  button.appendChild(buttonText);
-  ele.appendChild(button);
-
-  // add listener for button
-  button.addEventListener('click', restartGame);
 }
 
 function restartGame(){  

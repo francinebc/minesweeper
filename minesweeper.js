@@ -105,6 +105,17 @@ function countSurroundingMines (cell) {
   return mines;
 }
 
+function restartButton(){
+  var body = document.getElementsByTagName('body')[0];
+  var button = document.createElement("button");
+  var buttonText = document.createTextNode("Restart");
+  button.appendChild(buttonText);
+  body.appendChild(button);
+
+  // add listener for button
+  button.addEventListener('click', restartGame);
+}
+
 function restartGame(){  
   // remove the current board and set up again
   var elem = document.getElementsByClassName('board')[0];
@@ -113,6 +124,10 @@ function restartGame(){
   }
   // remove restart button
   document.getElementsByTagName('button')[0].remove();
+
+  // remove event listeners
+  document.removeEventListener('click', checkForWin)
+  document.removeEventListener('contextmenu', checkForWin)
 
   startGame();
 }

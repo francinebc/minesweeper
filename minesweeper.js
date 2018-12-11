@@ -10,8 +10,8 @@ var board = {
 };
 
 
-const rows = 5;
-const mineNo = 9;
+var rows = 5;
+var mineNo = 9;
 
 function populateCells(){
   // make a cell object for every row, col position on board
@@ -23,7 +23,7 @@ function populateCells(){
   }
   // assign mines
   var isAMine = randomRowCols();
-  for(var i=0; i<isAMine.length; i++){
+  for(var i=0; i<isAMine.length && i<rows*rows; i++){
     board.cells[isAMine[i][0]*rows+isAMine[i][1]].isMine = true;
   }
   // count surrounding mines
@@ -51,7 +51,7 @@ function randomRowCols(){
 }
 
 function startGame () {
-
+  displayMessage('Let\'s play!');
   setInitParams();
 
 }

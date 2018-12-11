@@ -2,17 +2,45 @@ document.addEventListener('DOMContentLoaded', startGame)
 
 
 
-// Define your `board` object here!
-var board = {};
 
+// Global variables
+var board = {};
 
 var minRows = 2;
 var maxRows = 6;
 var minMines = 1;
 var maxMines = 10;
+
 // default values
 var rows = 5;
 var mineNo = 9;
+
+function startGame () {
+  displayMessage('Let\'s play!');
+  setInitParams();
+}
+
+function gameInit(){
+
+  // set rows and mines
+  rows = document.getElementById("rowNum").value;
+  mineNo = document.getElementById("mineNum").value;
+  if(mineNo == "" || rows == "") return; // do nothing if no input
+  if(rows>maxRows) rows = maxRows;
+  if(mineNo>=rows*rows) mineNo=rows*rows-1;
+  
+  populateCells();
+
+  // remove restart button and input fields
+  document.getElementsByTagName('button')[0].remove();
+  document.getElementsByTagName('form')[0].remove();
+
+  //set event listeners
+  document.addEventListener('click', checkForWin)
+  document.addEventListener('contextmenu', checkForWin)
+
+  lib.initBoard()
+}
 
 function populateCells(){
   // make a cell object for every row, col position on board
@@ -33,6 +61,10 @@ function populateCells(){
   }
 }
 
+/**
+ * This function returns an array of unique x,y co-ordinates, randomly generated.
+ * The length of the array is determined by the number of mines chosen by the user.
+ */
 function randomRowCols(){
   var ranArray = [];
   for(var i=0; ranArray.length<mineNo; i++){
@@ -42,51 +74,20 @@ function randomRowCols(){
     var found = ranArray.find(function(pos){
       return pos[0]===row && pos[1]===col;
     })
-    // if not in array then add
+    // add to array if not already in array
     if(found == undefined){
       ranArray.push([row, col]);
     }
-    // console.log ("found? " + found + " row: " + row + " col: " + col);
   }
   return ranArray;
 }
 
-function startGame () {
-  displayMessage('Let\'s play!');
-  setInitParams();
-}
-
-function gameInit(){
-  // set rows and mines
-  rows = document.getElementById("rowNum").value;
-  mineNo = document.getElementById("mineNum").value;
-  if(mineNo == "" || rows == "") return; // do nothing if no input
-  if(rows>maxRows) rows = maxRows;
-  if(mineNo>=rows*rows) mineNo=rows*rows-1;
-  
-  populateCells();
-
-  // remove restart button and input fields
-  document.getElementsByTagName('button')[0].remove();
-  document.getElementsByTagName('form')[0].remove();
-
-  //set event listeners
-  document.addEventListener('click', checkForWin)
-  document.addEventListener('contextmenu', checkForWin)
-
-  
-  // Don't remove this function call: it makes the game work!
-  lib.initBoard()
-}
-
-
 function checkForWin () {
+  // check if winning condition not yet met
   for (var i=0; i<board.cells.length; i++){
-    // if not a mine but hidden - no win
     if(!board.cells[i].isMine && board.cells[i].hidden){
       return false;
     }
-    // if is a mine but mark property does not exist or marked false
     if(board.cells[i].isMine){
       if(!board.cells[i].hasOwnProperty("isMarked")){
         return false;
@@ -112,7 +113,7 @@ function countSurroundingMines (cell) {
 }
 
 function restartGame(){  
-  // remove the current board and set up again
+  // remove the current board for a clean restart
   var elem = document.getElementsByClassName('board')[0];
   while (elem.firstChild) {
       elem.removeChild(elem.firstChild);

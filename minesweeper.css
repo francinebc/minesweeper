@@ -20,7 +20,7 @@ body {
   font-size: 1.5rem;
 }
 
-#restartButton{
+button {
   padding: 10px;
   margin: 30px;
 }

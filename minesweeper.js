@@ -52,11 +52,18 @@ function randomRowCols(){
 
 function startGame () {
 
+  setInitParams();
+
+}
+
+function gameInit(){
   populateCells();
+  // remove restart button and input fields
+  document.getElementsByTagName('button')[0].remove();
+
   
   // Don't remove this function call: it makes the game work!
   lib.initBoard()
-
 }
 
 
@@ -99,7 +106,7 @@ function restartGame(){
       elem.removeChild(elem.firstChild);
   }
   // remove restart button
-  document.getElementById('restartButton').remove();
+  document.getElementsByTagName('button')[0].remove();
 
   startGame();
 }

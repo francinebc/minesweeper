@@ -125,8 +125,9 @@ function restartGame(){
   while (elem.firstChild) {
       elem.removeChild(elem.firstChild);
   }
-  // remove restart button
+  // remove restart button and audio html
   document.getElementsByTagName('button')[0].remove();
+  document.getElementsByTagName('audio')[0].remove();
 
   // remove event listeners
   document.removeEventListener('click', checkForWin)

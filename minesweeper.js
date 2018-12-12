@@ -25,7 +25,11 @@ function gameInit(){
   // set rows and mines
   rows = document.getElementById("rowNum").value;
   mineNo = document.getElementById("mineNum").value;
+
+  // check inputs because users are mean
   if(mineNo == "" || rows == "") return; // do nothing if no input
+  if(mineNo<minMines) mineNo=minMines;
+  if(rows<minRows) rows=minRows;
   if(rows>maxRows) rows = maxRows;
   if(mineNo>=rows*rows) mineNo=rows*rows-1;
   

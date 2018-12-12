@@ -14,6 +14,8 @@ var maxMines = 10;
 // default values
 var rows = 5;
 var mineNo = 9;
+var wins = 0;
+var losses = 0;
 
 function startGame () {
   displayMessage('Let\'s play!');
@@ -104,6 +106,7 @@ function checkForWin () {
   displayMessage('You win!');
   playSound("audio/applause.mp3");
   restartButton();
+  showWins(1);
   return true;
 }
 
@@ -130,4 +133,36 @@ function restartGame(){
   document.removeEventListener('contextmenu', checkForWin)
 
   startGame();
+}
+
+function showWins(winOrLoss){
+  if(winOrLoss>0) wins++;
+  if(winOrLoss<0) losses++;
+  var body = document.getElementsByTagName('body')[0];
+
+  // if elements already created then just update
+  if(document.getElementById("winsAndLosses") != null) {
+    document.getElementById("wins").textContent = "Wins: " + wins;
+    document.getElementById("losses").textContent = "Losses: " + losses;
+  }
+  //otherwise create elements
+  else {
+    var div = document.createElement('div');
+    div.setAttribute("id", "winsAndLosses");
+
+    var win = document.createElement('p');
+    win.setAttribute("id", "wins");
+    var winMsg = document.createTextNode("Wins: " + wins);
+    win.appendChild(winMsg);
+
+    var loss = document.createElement('p');
+    loss.setAttribute("id", "losses");
+    var lossMsg = document.createTextNode("Losses: " + losses);
+    loss.appendChild(lossMsg);
+
+    div.appendChild(win);
+    div.appendChild(loss);
+    body.appendChild(div);
+  }
+
 }

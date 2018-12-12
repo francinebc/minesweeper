@@ -10,6 +10,7 @@ var minRows = 2;
 var maxRows = 6;
 var minMines = 1;
 var maxMines = 10;
+var modes = [[4, 6], [5, 12], [6, 18]];
 
 // default values
 var rows = 5;
@@ -22,24 +23,19 @@ function startGame () {
   setInitParams();
 }
 
-function gameInit(){
+function gameInit(mode){
 
-  // set rows and mines
-  rows = document.getElementById("rowNum").value;
-  mineNo = document.getElementById("mineNum").value;
+  console.log("you clicked me");
 
-  // check inputs because users are mean
-  if(mineNo == "" || rows == "") return; // do nothing if no input
-  if(mineNo<minMines) mineNo=minMines;
-  if(rows<minRows) rows=minRows;
-  if(rows>maxRows) rows = maxRows;
-  if(mineNo>=rows*rows) mineNo=rows*rows-1;
+  rows = modes[mode][0];
+  mineNo = modes[mode][1];
   
   populateCells();
 
-  // remove restart button and input fields
-  document.getElementsByTagName('button')[0].remove();
-  document.getElementsByTagName('form')[0].remove();
+  // remove all buttons
+  for(var i=0; i<=document.getElementsByTagName('button').length; i++){
+    document.getElementsByTagName('button')[i].remove();
+  }
 
   //set event listeners
   document.addEventListener('click', checkForWin)

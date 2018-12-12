@@ -15,17 +15,16 @@ var modes = [[4, 6], [5, 12], [6, 18]];
 // default values
 var rows = 5;
 var mineNo = 9;
-var wins = 0;
-var losses = 0;
+var winsAndLosses = [["Wins", 0],["Losses", 0]];
 
 function startGame () {
   displayMessage('Let\'s play!');
-  setInitParams();
+  setupButtons();
 }
 
 function gameInit(mode){
 
-  console.log("you clicked me");
+  console.log("mode: " + mode);
 
   rows = modes[mode][0];
   mineNo = modes[mode][1];
@@ -33,8 +32,8 @@ function gameInit(mode){
   populateCells();
 
   // remove all buttons
-  for(var i=0; i<=document.getElementsByTagName('button').length; i++){
-    document.getElementsByTagName('button')[i].remove();
+  while(document.getElementsByTagName('button').length>0){
+    document.getElementsByTagName('button')[0].remove();
   }
 
   //set event listeners
@@ -102,7 +101,7 @@ function checkForWin () {
   displayMessage('You win!');
   playSound("audio/applause.mp3");
   restartButton();
-  showWins(1);
+  showWins(0);
   return true;
 }
 
@@ -133,32 +132,30 @@ function restartGame(){
 }
 
 function showWins(winOrLoss){
-  if(winOrLoss>0) wins++;
-  if(winOrLoss<0) losses++;
+
+  winsAndLosses[winOrLoss][1]++;
+
   var body = document.getElementsByTagName('body')[0];
+  
 
   // if elements already created then just update
   if(document.getElementById("winsAndLosses") != null) {
-    document.getElementById("wins").textContent = "Wins: " + wins;
-    document.getElementById("losses").textContent = "Losses: " + losses;
+    document.getElementById(winsAndLosses[0][0]).textContent = winsAndLosses[0][0] + ": " + winsAndLosses[0][1];
+    document.getElementById(winsAndLosses[1][0]).textContent = winsAndLosses[1][0] + ": " + winsAndLosses[1][1];
   }
   //otherwise create elements
   else {
     var div = document.createElement('div');
-    div.setAttribute("id", "winsAndLosses");
+    div.setAttribute("id", "winsAndLosses");    
 
-    var win = document.createElement('p');
-    win.setAttribute("id", "wins");
-    var winMsg = document.createTextNode("Wins: " + wins);
-    win.appendChild(winMsg);
+    for (var i=0; i<winsAndLosses.length; i++){
+      var para = document.createElement('p');
+      para.setAttribute("id", winsAndLosses[i][0]);
+      var msg = document.createTextNode(winsAndLosses[i][0] + ": " + winsAndLosses[i][1]);
+      para.appendChild(msg);
+      div.appendChild(para);
+    }
 
-    var loss = document.createElement('p');
-    loss.setAttribute("id", "losses");
-    var lossMsg = document.createTextNode("Losses: " + losses);
-    loss.appendChild(lossMsg);
-
-    div.appendChild(win);
-    div.appendChild(loss);
     body.appendChild(div);
   }
 

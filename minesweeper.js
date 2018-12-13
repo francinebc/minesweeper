@@ -10,7 +10,7 @@ var minRows = 2;
 var maxRows = 6;
 var minMines = 1;
 var maxMines = 10;
-var modes = [[2, 1], [5, 12], [6, 18]];
+var modes = [[4, 6], [5, 12], [6, 18]];
 
 // default values
 var rows = 5;

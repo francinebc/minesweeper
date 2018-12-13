@@ -10,7 +10,7 @@ var minRows = 2;
 var maxRows = 6;
 var minMines = 1;
 var maxMines = 10;
-var modes = [[4, 6], [5, 12], [6, 18]];
+var modes = [[2, 1], [5, 12], [6, 18]];
 
 // default values
 var rows = 5;
@@ -98,10 +98,12 @@ function checkForWin () {
       }
     }
   }
-  displayMessage('You win!');
   playSound("audio/applause.mp3");
-  restartButton();
   showWins(0);
+  displayMessage('You win!');
+  revealMines();
+  removeListeners();
+  restartButton();
   return true;
 }
 
@@ -124,9 +126,6 @@ function restartGame(){
   document.getElementsByTagName('button')[0].remove();
   document.getElementsByTagName('audio')[0].remove();
 
-  // remove event listeners
-  document.removeEventListener('click', checkForWin)
-  document.removeEventListener('contextmenu', checkForWin)
 
   startGame();
 }

@@ -5,12 +5,9 @@ document.addEventListener('DOMContentLoaded', startGame)
 
 // Global variables
 var board = {};
-
-var minRows = 2;
-var maxRows = 6;
-var minMines = 1;
-var maxMines = 10;
 var modes = [[2, 1], [5, 12], [6, 18]];
+var minsAndMaxes = [["Rows", 2, 6], ["Mines", 1, 10]];
+
 
 // default values
 var rows = 5;
@@ -22,19 +19,24 @@ function startGame () {
   setupButtons();
 }
 
-function gameInit(mode){
+function gameInit(){
 
-  console.log("mode: " + mode);
+  // set rows and mines
+  rows = document.getElementById(minsAndMaxes[0][0]).value;
+  mineNo = document.getElementById(minsAndMaxes[1][0]).value;
 
-  rows = modes[mode][0];
-  mineNo = modes[mode][1];
+  // check inputs because users are mean
+  if(mineNo == "" || rows == "") return; // do nothing if no input
+  if(mineNo<minsAndMaxes[1][1]) mineNo = minsAndMaxes[1][1];
+  if(rows<minsAndMaxes[0][1]) rows = minsAndMaxes[0][1];
+  if(rows>minsAndMaxes[0][2]) rows = minsAndMaxes[0][2]
+  if(mineNo>=rows*rows) mineNo=rows*rows-1;
   
   populateCells();
 
-  // remove all buttons
-  while(document.getElementsByTagName('button').length>0){
-    document.getElementsByTagName('button')[0].remove();
-  }
+  // remove restart button and input fields
+  document.getElementsByTagName('button')[0].remove();
+  document.getElementsByTagName('form')[0].remove();
 
   //set event listeners
   document.addEventListener('click', checkForWin)
